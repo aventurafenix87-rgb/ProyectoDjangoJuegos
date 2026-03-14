@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rompecabezas Musical por Niveles</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>🧩 Reto Musical 2026</h1>
+        <div class="info-juego">
+            <span id="nivel-indicador" class="nivel-badge">Nivel 1</span>
+            <span id="status-voz">🎤 Escuchando...</span>
+        </div>
+        <p class="instrucciones">Di: <strong>"Nivel 1"</strong>, <strong>"Ayuda"</strong> o <strong>"Reiniciar"</strong>.</p>
+    </header>
+
+    <main>
+        <!-- Nivel -->
+        <div class="controles-nivel">
+            <button id="btn-anterior" class="btn btn-control">⬅️ Anterior</button>
+            <button id="btn-siguiente" class="btn btn-control">Siguiente ➡️</button>
+        </div>
+
+        
+        <div class="controles">
+            <button id="btn-ayuda" class="btn btn-ayuda">💡 Ayuda / Pista</button>
+            <button id="btn-reiniciar" class="btn btn-accion">🔄 Reiniciar Nivel</button>
+        </div>
+
+        
+        <section class="juego-wrapper">
+            <div id="tablero-fondo" class="tablero-fondo"></div> <!-- Imagen completa para pistas -->
+            <div id="tablero" class="tablero">
+                
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Fundación de Niños Especiales - Terapia Cognitiva</p>
+    </footer>
+
+    <script src="juego.js"></script>
+</body>
+</html>

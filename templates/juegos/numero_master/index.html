@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numero Master</title>
+    <link rel="stylesheet" href="{% static 'juegos/numero_master/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'juegos/common/theme.css' %}">
+</head>
+<body>
+    <button class="theme-toggle-btn" onclick="toggleTheme()" title="Cambiar Modo" style="top: 15px; right: 15px;">
+        <span class="theme-icon">🌙</span> <span class="theme-text">Tema</span>
+    </button>
+    <a href="{% url 'index' %}" class="btn-volver-menu" style="position: fixed; top: 15px; left: 15px; background: #2c3e50; color: white !important; padding: 12px 20px; border-radius: 30px; text-decoration: none !important; font-weight: bold; backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.4); z-index: 10000; box-shadow: 0 5px 20px rgba(0,0,0,0.5); display: block;">⬅️ Menú Principal</a>
+
+    <div class="game-container">
+        <div class="question-card">
+            <div class="instruction">¿Cuál es el resultado?</div>
+            <div class="question-text" id="question">2 + 2</div>
+        </div>
+        <div class="feedback" id="feedback"></div>
+        <div class="options-grid" id="numOptions"></div>
+        <div class="stats">
+            <div>Puntos: <span id="score">0</span></div>
+            <div>Nivel: <span id="level">1</span></div>
+        </div>
+        <button id="reset-btn" class="reset-btn">Reiniciar Juego</button>
+    </div>
+    
+    <audio id="correctSound" src="https://www.soundjay.com/buttons/sounds/beep-07.mp3" preload="auto"></audio>
+    <audio id="levelUpSound" src="https://www.soundjay.com/buttons/sounds/beep-09.mp3" preload="auto"></audio>
+    
+    <script src="{% static 'juegos/common/theme.js' %}"></script>
+    <script src="{% static 'juegos/numero_master/script.js' %}"></script>
+</body>
+</html>

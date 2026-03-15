@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Juego Inclusivo 2026 - Final</title>
+    <link rel="stylesheet" href="{% static 'juegos/juego_master/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'juegos/common/theme.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <button class="theme-toggle-btn" onclick="toggleTheme()" title="Cambiar Modo" style="top: 15px; right: 15px;">
+        <span class="theme-icon">🌙</span> <span class="theme-text">Tema</span>
+    </button>
+    <a href="{% url 'index' %}" class="btn-volver-menu" style="position: fixed; top: 15px; left: 15px; background: #2c3e50; color: white !important; padding: 12px 20px; border-radius: 30px; text-decoration: none !important; font-weight: bold; backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.4); z-index: 10000; box-shadow: 0 5px 20px rgba(0,0,0,0.5); display: block;">⬅️ Menú Principal</a>
+<!-- Menú Principal -->
+    <main id="game-wrapper">
+        <canvas id="gameCanvas"></canvas>
+
+        
+        <div id="ui-layer">
+            <div id="top-bar">
+                <div id="lives-display">
+                    
+                </div>
+                <div id="score-board">
+                    <div class="stat">Puntos: <span id="score">0</span></div>
+                    <div class="stat">Nivel: <span id="level">1</span></div>
+                </div>
+            </div>
+
+            <div id="mic-status" class="mic-off">
+                <i class="fas fa-microphone-slash"></i>
+            </div>
+
+            <div id="feedback-msg"></div>
+        </div>
+
+        <!-- CONTROLES MÓVILES -->
+        <div id="mobile-controls">
+            <div class="d-pad">
+                <button class="ctrl-btn up" data-dir="up"><i class="fas fa-chevron-up"></i></button>
+                <div class="mid-row">
+                    <button class="ctrl-btn left" data-dir="left"><i class="fas fa-chevron-left"></i></button>
+                    <button class="ctrl-btn right" data-dir="right"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <button class="ctrl-btn down" data-dir="down"><i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+
+        <!-- Pantallas de Estado -->
+        <div id="start-screen" class="overlay">
+            <h1>Misión Espacial</h1>
+            <p>10 Vidas - 3 Niveles - ¡Gana!</p>
+            <button id="start-btn">JUGAR AHORA</button>
+        </div>
+
+        <div id="game-over-screen" class="overlay hidden">
+            <h1>Game Over</h1>
+            <p>¡Inténtalo de nuevo!</p>
+            <button onclick="location.reload()">Reiniciar</button>
+        </div>
+
+        <div id="win-screen" class="overlay hidden">
+            <h1>¡GANASTE! 🏆</h1>
+            <p>¡Completaste la misión!</p>
+            <button onclick="location.reload()">Jugar Otra Vez</button>
+        </div>
+    </main>
+
+    <script src="{% static 'juegos/common/theme.js' %}"></script>
+    <script src="{% static 'juegos/juego_master/script.js' %}"></script>
+</body>
+</html>

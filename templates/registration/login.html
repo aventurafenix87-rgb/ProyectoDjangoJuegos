@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcade Mágico - Iniciar Sesión</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --accent: #f43f5e;
+            --bg-dark: #0f172a;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg-dark);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: white;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            z-index: 0;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 50px;
+            width: 400px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            text-align: center;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .brand-logo {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        h1 {
+            font-weight: 900;
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            color: #94a3b8;
+            margin-bottom: 35px;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-left: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-weight: 900;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 25px -5px rgba(99, 102, 241, 0.6);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .error-msg {
+            background: rgba(244, 63, 94, 0.1);
+            border: 1px solid var(--accent);
+            color: #fb7185;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .footer-links a {
+            color: #818cf8;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <div class="login-card">
+        <span class="brand-logo">🎮</span>
+        <h1>¡Hola de nuevo!</h1>
+        <p class="subtitle">Ingresa para empezar a jugar</p>
+
+        {% if form.errors %}
+        <div class="error-msg">
+            Usuario o contraseña incorrectos. Inténtalo de nuevo.
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Usuario</label>
+                <input type="text" name="username" id="id_username" placeholder="Tu nombre de usuario" required>
+            </div>
+            <div class="form-group">
+                <label for="id_password">Contraseña</label>
+                <input type="password" name="password" id="id_password" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn-login">ENTRAR</button>
+        </form>
+
+        <div class="footer-links">
+            ¿No tienes cuenta? <a href="{% url 'signup' %}">Únete ahora</a>
+        </div>
+    </div>
+
+    <!-- Partículas sutiles de fondo -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#ffffff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.2, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
+                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.4 } }, "push": { "particles_nb": 4 } }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>

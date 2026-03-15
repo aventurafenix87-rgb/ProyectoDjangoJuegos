@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rompecabezas Musical por Niveles</title>
+    <link rel="stylesheet" href="{% static 'juegos/rompecabezas/estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'juegos/common/theme.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button class="theme-toggle-btn" onclick="toggleTheme()" title="Cambiar Modo" style="top: 15px; right: 15px;">
+        <span class="theme-icon">🌙</span> <span class="theme-text">Tema</span>
+    </button>
+    <a href="{% url 'index' %}" class="btn-volver-menu" style="position: fixed; top: 15px; left: 15px; background: #2c3e50; color: white !important; padding: 12px 20px; border-radius: 30px; text-decoration: none !important; font-weight: bold; backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.4); z-index: 10000; box-shadow: 0 5px 20px rgba(0,0,0,0.5); display: block;">⬅️ Menú Principal</a>
+
+    <header>
+        <h1>🧩 Reto Musical 2026</h1>
+        <div class="info-juego">
+            <span id="nivel-indicador" class="nivel-badge">Nivel 1</span>
+            <span id="status-voz">🎤 Escuchando...</span>
+        </div>
+        <p class="instrucciones">Di: <strong>"Nivel 1"</strong>, <strong>"Ayuda"</strong> o <strong>"Reiniciar"</strong>.</p>
+    </header>
+
+    <main>
+        <!-- Nivel -->
+        <div class="controles-nivel">
+            <button id="btn-anterior" class="btn btn-control">⬅️ Anterior</button>
+            <button id="btn-siguiente" class="btn btn-control">Siguiente ➡️</button>
+        </div>
+
+        
+        <div class="controles">
+            <button id="btn-ayuda" class="btn btn-ayuda">💡 Ayuda / Pista</button>
+            <button id="btn-reiniciar" class="btn btn-accion">🔄 Reiniciar Nivel</button>
+        </div>
+
+        
+        <section class="juego-wrapper">
+            <div id="tablero-fondo" class="tablero-fondo"></div> <!-- Imagen completa para pistas -->
+            <div id="tablero" class="tablero">
+                
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Fundación de Niños Especiales - Terapia Cognitiva</p>
+    </footer>
+
+    <script src="{% static 'juegos/common/theme.js' %}"></script>
+    <script src="{% static 'juegos/rompecabezas/juego.js' %}"></script>
+</body>
+</html>

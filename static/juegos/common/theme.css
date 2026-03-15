@@ -1,0 +1,112 @@
+
+/* Global Theme Variables */
+:root {
+    --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Light Mode Overrides */
+body.light-mode {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    background-image: none !important;
+}
+
+body.light-mode .header,
+body.light-mode .r-card,
+body.light-mode .stat-card,
+body.light-mode .progress-container,
+body.light-mode .letter-card,
+body.light-mode .target-letter-card,
+body.light-mode .option-card,
+body.light-mode .game-card {
+    background: white !important;
+    color: #0f172a !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+body.light-mode h1, 
+body.light-mode h2, 
+body.light-mode h3, 
+body.light-mode p,
+body.light-mode .subtitle,
+body.light-mode .mode-title,
+body.light-mode .mode-description,
+body.light-mode .search-instruction,
+body.light-mode .level-reached,
+body.light-mode .hud-value,
+body.light-mode .stat-val,
+body.light-mode .instruction-text,
+body.light-mode .text-muted {
+    color: #1e293b !important;
+    text-shadow: none !important;
+}
+
+/* Bootstrap specific overrides */
+body.light-mode .card,
+body.light-mode .modal-content,
+body.light-mode .list-group-item,
+body.light-mode .toast {
+    background-color: white !important;
+    color: #0f172a !important;
+    border-color: #e2e8f0 !important;
+}
+
+/* Game overlays and special cards */
+body.light-mode .overlay,
+body.light-mode .overlay-screen,
+body.light-mode .start-card,
+body.light-mode .gameover-card,
+body.light-mode .form-card,
+body.light-mode .instruction-card,
+body.light-mode .modulo-card {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #0f172a !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+}
+
+body.light-mode .btn-glow {
+    box-shadow: 0 4px 14px 0 rgba(0,0,0,0.2) !important;
+}
+
+body.light-mode .hud-chip,
+body.light-mode .stat-badge,
+body.light-mode .stat-chip {
+    background: #f1f5f9 !important;
+    border-color: #e2e8f0 !important;
+    color: #475569 !important;
+}
+
+/* Floating Toggle Button Style */
+.theme-toggle-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px; /* Opposite side of 'Back' button */
+    background: #2c3e50;
+    color: white !important;
+    padding: 10px 18px;
+    border-radius: 30px;
+    text-decoration: none !important;
+    font-weight: bold;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.4);
+    z-index: 10001;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.05);
+    background: #34495e;
+}
+
+/* Specific cards adjustment for light mode */
+body.light-mode .icon-container {
+    box-shadow: none !important;
+}

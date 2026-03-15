@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌈 Respirador Mágico 2026</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="{% static 'juegos/respirador/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'juegos/common/theme.css' %}">
+</head>
+<body>
+    <button class="theme-toggle-btn" onclick="toggleTheme()" title="Cambiar Modo" style="top: 15px; right: 15px;">
+        <span class="theme-icon">🌙</span> <span class="theme-text">Tema</span>
+    </button>
+
+    <a href="{% url 'index' %}" class="btn-volver-menu" style="position: fixed; top: 15px; left: 15px; background: #2c3e50; color: white !important; padding: 12px 20px; border-radius: 30px; text-decoration: none !important; font-weight: bold; backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.4); z-index: 10000; box-shadow: 0 5px 20px rgba(0,0,0,0.5); display: block;">⬅️ Menú Principal</a>
+    
+    
+    <div id="resp-app">
+
+        <div id="scr-welcome" class="rscreen active">
+            <div class="r-card">
+                <div class="hero-emoji">🫁</div>
+                <h1 class="r-title">Respirador Mágico 2026</h1>
+                <p class="r-sub">Guía de respiración con IA, control por gestos y accesibilidad universal. Elige tu perfil y empieza.</p>
+                
+                <p class="profile-label">🎯 Selecciona tu modo:</p>
+                <div class="profile-selector">
+                    <button class="profile-btn active" onclick="setProfile('standard', this)">👤 Estándar</button>
+                    <button class="profile-btn autism" onclick="setProfile('autism', this)">🧩 Autismo</button>
+                    <button class="profile-btn tdah" onclick="setProfile('tdah', this)">⚡ TDAH</button>
+                    <button class="profile-btn motor" onclick="setProfile('motor', this)">🤲 Motor</button>
+                    <button class="profile-btn visual" onclick="setProfile('visual', this)">👁️ Visual</button>
+                </div>
+
+                <button class="rbtn-main" onclick="showRScreen('lvl')">¡Comenzar! 🚀</button>
+            </div>
+        </div>
+
+        <div id="scr-lvl" class="rscreen">
+            <h2 class="screen-title">🎯 Elige tu Aventura</h2>
+            <p class="screen-subtitle">¿Qué modo quieres practicar hoy?</p>
+            <div class="levels-wrap">
+                <div class="lv-box lv1" onclick="startEx(1)">
+                    <span class="lv-emoji">🌱</span>
+                    <h3>Explorador</h3>
+                    <p class="lv-desc">Para empezar</p>
+                    <div class="lv-timer">⏱️ 4-4-4 s</div>
+                </div>
+                <div class="lv-box lv2" onclick="startEx(2)">
+                    <span class="lv-emoji">🔥</span>
+                    <h3>Aventurero</h3>
+                    <p class="lv-desc">Para valientes</p>
+                    <div class="lv-timer">⏱️ 5-5-6 s</div>
+                </div>
+                <div class="lv-box lv3" onclick="startEx(3)">
+                    <span class="lv-emoji">⭐</span>
+                    <h3>Maestro</h3>
+                    <p class="lv-desc">Para expertos</p>
+                    <div class="lv-timer">⏱️ 6-6-8 s</div>
+                </div>
+                <div class="lv-box lv4" onclick="startEx(4)">
+                    <span class="lv-emoji">🌙</span>
+                    <h3>Sueño</h3>
+                    <p class="lv-desc">Inducir el sueño</p>
+                    <div class="lv-timer">⏱️ 4-7-8 s</div>
+                </div>
+            </div>
+            <button class="rbtn-sec" onclick="showRScreen('welcome')">⬅️ Volver</button>
+        </div>
+
+        <div id="scr-ex" class="rscreen">
+            <div class="ex-header">
+                <div class="stat-bub">
+                    <div class="stat-icon">🏆</div>
+                    <div>
+                        <span class="stat-lbl">Nivel</span>
+                        <span class="stat-val" id="rLvlName">-</span>
+                    </div>
+                </div>
+                <div class="stat-bub">
+                    <div class="stat-icon">⏰</div>
+                    <div>
+                        <span class="stat-lbl">Tiempo</span>
+                        <span class="stat-val" id="rTimer">10:00</span>
+                    </div>
+                </div>
+                <div class="stat-bub">
+                    <div class="stat-icon">🔄</div>
+                    <div>
+                        <span class="stat-lbl">Ciclos</span>
+                        <span class="stat-val" id="rCycles">0</span>
+                    </div>
+                </div>
+                <div class="stat-bub" id="gestureStat" style="display:none;">
+                    <div class="stat-icon">✋</div>
+                    <div>
+                        <span class="stat-lbl">Gestos</span>
+                        <span class="stat-val" id="rGestures">ON</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="breath-wrap">
+                <canvas id="rCanvas" width="280" height="280"></canvas>
+                <div class="breath-ov">
+                    <div class="phase-lbl" id="rPhase">Prepárate</div>
+                    <div class="phase-cnt" id="rCount">3</div>
+                </div>
+            </div>
+
+            <div class="gesture-indicator" id="gestureIndicator"></div>
+
+            <div class="msg-bub" id="rMsg">🌟 Respira y conecta con tu interior 🌟</div>
+
+            <div class="prog-track">
+                <div class="prog-fill" id="rProgBar"></div>
+            </div>
+            <p class="prog-txt" id="rProgTxt">Sesión de 10 minutos</p>
+
+            <div class="ctrls">
+                <button class="rbtn-ctrl ctrl-pause" id="rPauseBtn" onclick="toggleRPause()">⏸️ Pausar</button>
+                <button class="rbtn-ctrl ctrl-voice" id="rVoiceBtn" onclick="toggleRVoice()">🗣️ Voz: ON</button>
+                <button class="rbtn-ctrl ctrl-gesture" id="rGestureBtn" onclick="toggleGesture()">✋ Gestos: OFF</button>
+                <button class="rbtn-ctrl ctrl-stop" onclick="stopEx()">⏹️ Terminar</button>
+            </div>
+
+            <p class="theme-label">🎨 Ambiente:</p>
+            <div class="th-grid">
+                <button class="th-orb active" data-th="calm" onclick="setTheme('calm',this)" title="Tranquilo">☁️</button>
+                <button class="th-orb" data-th="forest" onclick="setTheme('forest',this)" title="Bosque">🌳</button>
+                <button class="th-orb" data-th="ocean" onclick="setTheme('ocean',this)" title="Océano">🌊</button>
+                <button class="th-orb" data-th="rain" onclick="setTheme('rain',this)" title="Lluvia">🌧️</button>
+                <button class="th-orb" data-th="space" onclick="setTheme('space',this)" title="Galaxia">🌌</button>
+                <button class="th-orb" data-th="sleep" onclick="setTheme('sleep',this)" title="Sueño">🌙</button>
+            </div>
+
+            <div class="vol-row">
+                <span>🔊</span>
+                <input type="range" id="rVol" min="0" max="100" value="35" oninput="setVol(this.value)">
+                <span id="rVolPct">35%</span>
+            </div>
+        </div>
+
+        <div class="gesture-container hidden" id="gestureContainer">
+            <video id="gestureVideo" playsinline></video>
+            <canvas id="gestureCanvas"></canvas>
+            <div class="gesture-status" id="gestureStatus">Inicializando...</div>
+        </div>
+
+        <div id="scr-res" class="rscreen">
+            <div class="r-card">
+                <div class="result-emoji">🎉</div>
+                <h2 class="res-title">¡Increíble!</h2>
+                <p class="result-subtitle">Sesión completada</p>
+                <div class="res-cards">
+                    <div class="res-card">
+                        <div class="res-emoji">⏱️</div>
+                        <p class="res-lbl">Practicado</p>
+                        <p class="res-val" id="resDur">-</p>
+                    </div>
+                    <div class="res-card">
+                        <div class="res-emoji">🔄</div>
+                        <p class="res-lbl">Ciclos</p>
+                        <p class="res-val" id="resCyc">-</p>
+                    </div>
+                    <div class="res-card">
+                        <div class="res-emoji">🏆</div>
+                        <p class="res-lbl">Nivel</p>
+                        <p class="res-val" id="resLvl">-</p>
+                    </div>
+                    <div class="res-card" id="gestureResCard" style="display:none;">
+                        <div class="res-emoji">✋</div>
+                        <p class="res-lbl">Gestos</p>
+                        <p class="res-val" id="resGestures">-</p>
+                    </div>
+                </div>
+                <button class="rbtn-main" onclick="showRScreen('lvl')">¡Otra sesión! 🎮</button>
+                <button class="rbtn-sec" onclick="showRScreen('welcome')">🏠 Inicio</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="{% static 'juegos/common/theme.js' %}"></script>
+    <script src="{% static 'juegos/respirador/app.js' %}"></script>
+
+</body>
+</html>
